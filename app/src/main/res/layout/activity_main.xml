@@ -69,7 +69,7 @@
             android:layout_weight="0.1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Status:"
+            android:text="Būsena:"
             android:textStyle="bold" />
 
         <TextView
@@ -86,25 +86,25 @@
         android:id="@+id/scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bluetooth ON" />
+        android:text="Įjungti Bluetooth'ą" />
 
     <Button
         android:id="@+id/off"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bluetooth OFF" />
+        android:text="Išjungti Bluetooth'ą" />
 
     <Button
         android:id="@+id/paired_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Show paired Devices" />
+        android:text="Parodyti prijungtus įrenginius" />
 
     <Button
         android:id="@+id/discover"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Discover New Devices" />
+        android:text="Surasti naujus įrenginius" />
 
     <ListView
         android:id="@+id/devices_list_view"

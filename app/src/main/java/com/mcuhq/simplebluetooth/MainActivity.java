@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    Log.d("TESTOUT", readMessage);
+                    //Log.d("TESTOUT", readMessage);
                     char ch;
                     int[] temp= new int[6];
                     for(int j=0; j<6;j++)
@@ -131,11 +131,11 @@ public class MainActivity extends AppCompatActivity {
                     int g=0;
                     int count=0;
                     int [] data = new int[25600];
-                    for(int j=0; j<1024;j++)
+                    for(int j=0; j<2048;j++)
                     {
 
                             ch=readMessage.charAt(j);
-                            Log.d("beforeif", String.valueOf(ch));
+                           // Log.d("beforeif", String.valueOf(ch));
                             if(ch=='0'||ch=='1'||ch=='2'||ch=='3'||ch=='4'||ch=='5'||ch=='6'||ch=='7'||ch=='8'||ch=='9')
                             {
                                 Log.d("inif", String.valueOf(ch));
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else if(ch==';')
                             {
-                                Log.d("inifelse", String.valueOf(ch));
+                                //Log.d("inifelse", String.valueOf(ch));
                                 for(int b=0; b<6;b++)
                                 {
                                     Log.d("inifelsefor0", Integer.toString(temp[b]));
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                                         g--;
 
                                 }
-                                Log.d("inifelsefor2", Integer.toString(data[count]));
+                                //Log.d("inifelsefor2", Integer.toString(data[count]));
                                 count++;
                                 l=0;
                                 for(int y=0; y<6;y++)
@@ -178,16 +178,17 @@ public class MainActivity extends AppCompatActivity {
                             g=0;
 
                     }
+                    /*
                     for(int j=0; j<60;j++)
                     {
                        Log.d("afterif", Integer.toString(data[j]));
                     }
+                    */
 
-
-                    String [] parts = new String[25600];
-                    Arrays.fill(parts, null);
-                    parts = readMessage.split(";",0);
-                    Log.d("CONTENTS", readMessage);
+                    //String [] parts = new String[25600];
+                    //Arrays.fill(parts, null);
+                    //parts = readMessage.split(";",0);
+                    //Log.d("CONTENTS", readMessage);
 
 
                     int x=0;
@@ -205,13 +206,14 @@ public class MainActivity extends AppCompatActivity {
                             barEntries.add(new BarEntry(x,y));
                         }
 
-                        barDataSet = new BarDataSet(barEntries, "Data set");
+                        barDataSet = new BarDataSet(barEntries, "Ratų vibracijų spektras");
                         barData = new BarData(barDataSet);
 
                         barCh.setData(barData);
                         barCh.invalidate();
-                        barCh.notifyDataSetChanged();
+                        //barCh.notifyDataSetChanged();
                         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                        //barDataSet.setColor(50);
                         barDataSet.setValueTextColor(Color.BLACK);
                         barDataSet.setValueTextSize(8f);
 
@@ -224,16 +226,16 @@ public class MainActivity extends AppCompatActivity {
 
                 if(msg.what == CONNECTING_STATUS){
                     if(msg.arg1 == 1)
-                        mBluetoothStatus.setText("Connected to Device: " + msg.obj);
+                        mBluetoothStatus.setText("Prisijungta prie įrenginio: " + msg.obj);
                     else
-                        mBluetoothStatus.setText("Connection Failed");
+                        mBluetoothStatus.setText("Prisijungti nepavyko");
                 }
             }
         };
 
         if (mBTArrayAdapter == null) {
             // Device does not support Bluetooth
-            mBluetoothStatus.setText("Status: Bluetooth not found");
+            mBluetoothStatus.setText("Būsena: neįjungtas Bluetooth'as");
             Toast.makeText(getApplicationContext(),"Bluetooth device not found!",Toast.LENGTH_SHORT).show();
         }
         else {
@@ -282,11 +284,11 @@ public class MainActivity extends AppCompatActivity {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             mBluetoothStatus.setText("Bluetooth enabled");
-            Toast.makeText(getApplicationContext(),"Bluetooth turned on",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Bluetooth'as įjungtas",Toast.LENGTH_SHORT).show();
 
         }
         else{
-            Toast.makeText(getApplicationContext(),"Bluetooth is already on", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Bluetooth'as jau įjungtas", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -299,34 +301,34 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.
-                mBluetoothStatus.setText("Enabled");
+                mBluetoothStatus.setText("Įjungtas");
             }
             else
-                mBluetoothStatus.setText("Disabled");
+                mBluetoothStatus.setText("Išjungtas");
         }
     }
 
     private void bluetoothOff(){
         mBTAdapter.disable(); // turn off
-        mBluetoothStatus.setText("Bluetooth disabled");
-        Toast.makeText(getApplicationContext(),"Bluetooth turned Off", Toast.LENGTH_SHORT).show();
+        mBluetoothStatus.setText("Bluetooth'as išjungtas");
+        Toast.makeText(getApplicationContext(),"Bluetooth'as išjungtas", Toast.LENGTH_SHORT).show();
     }
 
     private void discover(){
         // Check if the device is already discovering
         if(mBTAdapter.isDiscovering()){
             mBTAdapter.cancelDiscovery();
-            Toast.makeText(getApplicationContext(),"Discovery stopped",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Paieška išjungta",Toast.LENGTH_SHORT).show();
         }
         else{
             if(mBTAdapter.isEnabled()) {
                 mBTArrayAdapter.clear(); // clear items
                 mBTAdapter.startDiscovery();
-                Toast.makeText(getApplicationContext(), "Discovery started", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Paieška  pradėta", Toast.LENGTH_SHORT).show();
                 registerReceiver(blReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
             }
             else{
-                Toast.makeText(getApplicationContext(), "Bluetooth not on", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Bluetooth'as neįjungtas'", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -352,10 +354,10 @@ public class MainActivity extends AppCompatActivity {
             for (BluetoothDevice device : mPairedDevices)
                 mBTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
 
-            Toast.makeText(getApplicationContext(), "Show Paired Devices", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Parodyti prijungtus įtaisus", Toast.LENGTH_SHORT).show();
         }
         else
-            Toast.makeText(getApplicationContext(), "Bluetooth not on", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Bluetooth'as neįjungtas", Toast.LENGTH_SHORT).show();
     }
 
     private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
@@ -363,11 +365,11 @@ public class MainActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             if(!mBTAdapter.isEnabled()) {
-                Toast.makeText(getBaseContext(), "Bluetooth not on", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Bluetooth'as neįjungtas", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            mBluetoothStatus.setText("Connecting...");
+            mBluetoothStatus.setText("Jungiamasi...");
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) view).getText().toString();
             final String address = info.substring(info.length() - 17);
@@ -386,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
                         mBTSocket = createBluetoothSocket(device);
                     } catch (IOException e) {
                         fail = true;
-                        Toast.makeText(getBaseContext(), "Socket creation failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Sukurti jungties nepavyko", Toast.LENGTH_SHORT).show();
                     }
                     // Establish the Bluetooth socket connection.
                     try {
@@ -399,7 +401,7 @@ public class MainActivity extends AppCompatActivity {
                                     .sendToTarget();
                         } catch (IOException e2) {
                             //insert code to deal with this
-                            Toast.makeText(getBaseContext(), "Socket creation failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), "Sukurti jungties nepavyko", Toast.LENGTH_SHORT).show();
                         }
                     }
                     if(!fail) {
@@ -419,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
             final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", UUID.class);
             return (BluetoothSocket) m.invoke(device, BT_MODULE_UUID);
         } catch (Exception e) {
-            Log.e(TAG, "Could not create Insecure RFComm Connection",e);
+            Log.e(TAG, "Nepavyko sukurit nesaugaus ryšio",e);
         }
         return  device.createRfcommSocketToServiceRecord(BT_MODULE_UUID);
     }
